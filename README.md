@@ -18,7 +18,10 @@ A practical solution for managing email overload by converting important emails 
 2. Filters emails based on your whitelist rules (sender, domain, subject, content)
 3. Uses Cohere AI to create a concise summary
 4. Sends the summary via SMS using TextBelt
-5. Marks the email as processed (adds Gmail label)
+5. Marks the email as processed by:
+   - Adding a "Processed" label to the email
+   - This prevents the same email from being processed in future runs
+   - You'll be able to find all processed emails under this label in Gmail
 
 ## Setup Guide
 
@@ -44,7 +47,15 @@ A practical solution for managing email overload by converting important emails 
      - `https://www.googleapis.com/auth/gmail.labels`
      - `https://www.googleapis.com/auth/gmail.readonly`
 
-4. **Create OAuth 2.0 Credentials**
+4. **Create Gmail Label**
+   - Open Gmail in your browser
+   - In the left sidebar, scroll down and click "Create new label"
+   - Name it "G2SMS" (case sensitive - must match exactly)
+   - This label will be automatically applied to emails after they're processed
+   - You can use this label to track which emails have been sent via SMS
+   - Note: The label name is hardcoded in the application, so it must be "G2SMS"
+
+5. **Create OAuth 2.0 Credentials**
    - Go to "APIs & Services" > "Credentials"
    - Click "Create Credentials" > "OAuth client ID"
    - Choose "Desktop app" as application type
@@ -52,7 +63,7 @@ A practical solution for managing email overload by converting important emails 
    - Download the client configuration JSON file
    - Rename it to `oauth2.json` and place in `credentials/` folder
 
-5. **Get Refresh Token**
+6. **Get Refresh Token**
    - Go to [OAuth 2.0 Playground](https://developers.google.com/oauthplayground/)
    - Click the settings icon (⚙️) in the top right
    - Check "Use your own OAuth credentials"
@@ -69,14 +80,14 @@ A practical solution for managing email overload by converting important emails 
    - Click "Exchange authorization code for tokens"
    - Copy the refresh token
 
-6. **Set Up Credentials Folder**
+7. **Set Up Credentials Folder**
    ```bash
    mkdir -p credentials
    ```
    
    You'll need two files in your credentials folder:
    
-   1. `credentials/oauth2.json` (from step 4):
+   1. `credentials/oauth2.json` (from step 5):
    ```json
    {
      "installed": {
@@ -87,7 +98,7 @@ A practical solution for managing email overload by converting important emails 
    }
    ```
 
-   2. `credentials/token.json` (from step 5):
+   2. `credentials/token.json` (from step 6):
    ```json
    {
      "refresh_token": "your-refresh-token",
@@ -95,19 +106,19 @@ A practical solution for managing email overload by converting important emails 
    }
    ```
 
-7. **Verify Setup**
+8. **Verify Setup**
    - Add both files to your `.gitignore`:
      ```
      credentials/oauth2.json
      credentials/token.json
      ```
-   - Add the credentials as GitHub secrets (from step 4 & 5):
+   - Add the credentials as GitHub secrets (from step 5 & 6):
      - `GMAIL_CLIENT_ID`
      - `GMAIL_CLIENT_SECRET`
      - `GMAIL_REFRESH_TOKEN`
 
 Common Issues:
-- If you get "invalid_grant", your refresh token has expired. Repeat step 5
+- If you get "invalid_grant", your refresh token has expired. Repeat step 6
 - If you get "access denied", check your OAuth consent screen configuration
 - Make sure all required scopes are enabled in both OAuth consent screen and OAuth playground
 
