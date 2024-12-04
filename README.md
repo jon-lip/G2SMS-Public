@@ -23,6 +23,46 @@ A practical solution for managing email overload by converting important emails 
    - This prevents the same email from being processed in future runs
    - You'll be able to find all processed emails under this label in Gmail
 
+## Example Usage
+
+Here's how the system processes a typical school email:
+
+**Original Email:**
+```
+From: principal@mycharterschool.edu
+Subject: [ATTN: Parents and Faculty Staff!] Important Updates for Spring Activities
+
+Dear Parents and Staff,
+
+I hope this email finds you well! We've had such a wonderful winter season with all of our amazing events and activities. The student art show last week was particularly impressive, and I want to thank all the parents who volunteered to help set up the displays.
+
+As we look forward to spring, I wanted to share some updates about our community. The PTA has been working hard on organizing several fundraisers, and we're excited about the upcoming bake sale next month. Speaking of which, we've had to make a slight change to our calendar - the Spring Concert has been rescheduled to April 15th at 6:30 PM in the main auditorium due to a scheduling conflict with our venue. Please make sure to update your calendars accordingly.
+
+We're also planning to repaint several classrooms over the spring break, and we're still looking for parent volunteers to help with various committee positions for next year's events. If you're interested, please reach out to our volunteer coordinator.
+
+Don't forget that our weekly newsletter will continue to provide updates about all our regular activities and clubs.
+
+Thank you for your continued support of our school community!
+
+Sincerely,
+Dr. Sarah Johnson
+Principal, My Charter School
+```
+
+**G2SMS Summary Received via SMS:**
+```
+🏫 My Charter School Update:
+IMPORTANT DATE CHANGE: Spring Concert rescheduled to April 15th, 6:30 PM in main auditorium.
+- Dr. Sarah Johnson, Principal
+```
+
+The system:
+1. Matched the email based on the domain `mycharterschool.edu`
+2. Detected keywords "important" and "update" in the subject
+3. Used Cohere AI to extract the key information
+4. Delivered only the critical update via SMS
+5. Added the "G2SMS" label to the email in Gmail
+
 ## Setup Guide
 
 ### 1. Gmail API Setup
